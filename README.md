@@ -12,4 +12,4 @@ This program reads the names of party members by memory and opens their username
 ![](https://media.giphy.com/media/xUOxfkTf6NHqzHwgyQ/giphy.gif)
 
 
-![Youtube](https://www.youtube.com/watch?v=r9TKVYfq_b0&feature=youtu.be)
+[Youtube](https://youtu.be/r9TKVYfq_b0)
