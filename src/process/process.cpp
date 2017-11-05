@@ -19,7 +19,7 @@ void Process::getProcessId(std::string processName)
 {
     hWnd_ = FindWindow(0, processName.c_str());
     GetWindowThreadProcessId(hWnd_, &pid_);
-    pHandle_ = OpenProcess(PROCESS_VM_OPERATION | PROCESS_VM_READ, FALSE, pid_);
+    pHandle_ = OpenProcess(PROCESS_VM_READ, FALSE, pid_);
 
     if(pHandle_ == NULL)
     {

@@ -9,10 +9,12 @@ class Module
 private:
     MODULEENTRY32 nModule;
     DWORD address_;
+    bool bit64_;
     TCHAR* moduleName_;
 public:
     Module(TCHAR[]);
     ~Module();
     bool getModule(Process*);
+    bool getModule32bit(Process*);
     DWORD getAddress();
 };
