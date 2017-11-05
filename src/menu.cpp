@@ -24,11 +24,14 @@ void Menu::displayAllies()
     // display title
     std::cout << "FFXIV Party Logs\n";
     std::cout << "--------------------\n";
-    std::cout << std::hex << "Memaddress: " << fflogs_->numberOfPartyMembers_->getMemoryAddress(fflogs_->ffxiv_, fflogs_->exe_) << "\n";
+
+    // this is for debugging purposes
     std::cout << "Number of people in the party: ";
     int numOfPartyMembers;
     ReadProcessMemory(fflogs_->ffxiv_->getHandle(), (void*)(fflogs_->numberOfPartyMembers_->getMemoryAddress(fflogs_->ffxiv_, fflogs_->exe_)), &numOfPartyMembers, sizeof(int), 0);
     std::cout << numOfPartyMembers << "\n";
+
+
     for(int i = 0; i < fflogs_->filteredAllies_.size(); i++)
     {
         SetConsoleTextAttribute(hConsole_, 7);
