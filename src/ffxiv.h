@@ -17,6 +17,7 @@ private:
     Process *ffxiv_;
     char foo_[80];
     Offset *numberOfPartyMembers_;
+    int partyMembers_;
     std::vector<Player*> allies_;
     std::vector<Player*> filteredAllies_;
 public:
@@ -25,6 +26,7 @@ public:
     void getAllies();
     void deleteAllies();
     void updateNames();
+    void updateNumberOfPartyMembers();
     bool checkArrayForDoubles(std::string);
     void filterAllies();
 };

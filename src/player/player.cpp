@@ -12,8 +12,7 @@ void Player::openBrowser()
 
     std::string fullName = firstName + "%20" + lastName;
 
-    ShellExecute(NULL, "open", (baseUrl_ + fullName).c_str(),
-        NULL, NULL, SW_SHOWNORMAL);
+    ShellExecute(NULL, "open", (baseUrl_ + fullName).c_str(), NULL, NULL, SW_SHOWNORMAL);
 }
 
 bool Player::compare(Player* player)

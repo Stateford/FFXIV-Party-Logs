@@ -5,6 +5,7 @@
 Menu::Menu()
 {
     fflogs_ = new FFXIV();
+    hConsole_ = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
 // deconstructor
@@ -18,7 +19,7 @@ void Menu::displayAllies()
 {
     // update play characters names
     fflogs_->updateNames();
-    hConsole_ = GetStdHandle(STD_OUTPUT_HANDLE);
+    
 
     SetConsoleTextAttribute(hConsole_, 7);
     // display title
@@ -27,39 +28,40 @@ void Menu::displayAllies()
 
     // this is for debugging purposes
     std::cout << "Number of people in the party: ";
-    int numOfPartyMembers;
-    ReadProcessMemory(fflogs_->ffxiv_->getHandle(), (void*)(fflogs_->numberOfPartyMembers_->getMemoryAddress(fflogs_->ffxiv_, fflogs_->exe_)), &numOfPartyMembers, sizeof(int), 0);
-    std::cout << numOfPartyMembers << "\n";
+    std::cout << fflogs_->partyMembers_ << "\n";
 
-
-    for(int i = 0; i < fflogs_->filteredAllies_.size(); i++)
+    for(int i = 0; i < fflogs_->partyMembers_; i++)
     {
         SetConsoleTextAttribute(hConsole_, 7);
-        if(i == currentMenuSelection_)
+        if (i == currentMenuSelection_)
         {
-            SetConsoleTextAttribute(hConsole_, 16);
+            SetConsoleTextAttribute(hConsole_, 23);
         }
         fflogs_->filteredAllies_[i]->display();
     }
     // this prevents the colors from breaking
     SetConsoleTextAttribute(hConsole_, 7);
-
 }
+
 
 void Menu::redraw()
 {
+    std::cout.flush();
     system("CLS");
     displayAllies();
 }
 
 void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
 {
+    std::cout.flush();
     system("CLS");
     displayAllies();
 
     while(true)
     {
         DWORD count;
+        
+        redraw();
 
         if(WaitForSingleObject(hstdin, 0) == WAIT_OBJECT_0)
         {
@@ -79,14 +81,14 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
                     }
                     break;
                 case VK_DOWN:
-                    if(currentMenuSelection_ < fflogs_->allies_.size() - 1)
+                    if(currentMenuSelection_ < fflogs_->partyMembers_ - 1)
                     {
                         currentMenuSelection_++;
                         redraw();
                     }
                     break;
                 case VK_RETURN:
-                    fflogs_->allies_[currentMenuSelection_]->openBrowser();
+                    fflogs_->filteredAllies_[currentMenuSelection_]->openBrowser();
                     break;
                 default:
                     redraw();

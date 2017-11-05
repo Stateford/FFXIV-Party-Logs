@@ -3,7 +3,6 @@
 int main()
 {
     Menu menu;
-
     menu.start();
 
     system("pause");

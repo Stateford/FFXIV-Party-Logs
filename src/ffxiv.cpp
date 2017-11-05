@@ -12,8 +12,8 @@ FFXIV::FFXIV()
     exe_->getModule(ffxiv_);
 
     numberOfPartyMembers_ = new Offset({ 0x11404DC, 0x1C, 0x10, 0x104, 0x1C });
-
     getAllies();
+    updateNumberOfPartyMembers();
     updateNames();
 }
 
@@ -21,6 +21,12 @@ FFXIV::FFXIV()
 FFXIV::~FFXIV()
 {
     deleteAllies();
+    delete ffxiv_;
+    delete exe_;
+    delete numberOfPartyMembers_;
+    ffxiv_ = nullptr;
+    exe_ = nullptr;
+    numberOfPartyMembers_ = nullptr;
 }
 
 // gets ally list at offsets
@@ -57,7 +63,14 @@ void FFXIV::updateNames()
         ReadProcessMemory(ffxiv_->getHandle(), (void*)(exe_->getAddress() + p->address_), &p->name_, 80, 0);
     }
     filterAllies();
+    updateNumberOfPartyMembers();
 }
+
+void FFXIV::updateNumberOfPartyMembers()
+{
+    ReadProcessMemory(ffxiv_->getHandle(), (void*)(numberOfPartyMembers_->getMemoryAddress(ffxiv_, exe_)), &partyMembers_, sizeof(int), 0);
+}
+
 
 // checks if name is already in filteredAllies_
 bool FFXIV::checkArrayForDoubles(std::string name)

@@ -5,13 +5,22 @@ Offset::Offset(std::vector<DWORD> offset)
     offsets_ = offset;
 }
 
-DWORD Offset::getMemoryAddress(Process* ffxiv_, Module* exe_)
+Offset::~Offset()
 {
-    DWORD temp = exe_->getAddress();
+    
+}
+
+/*
+ * Returns the memory address listed at the offset
+ */
+DWORD Offset::getMemoryAddress(Process* proc, Module* module)
+{
+    // get offset from the module
+    DWORD address = module->getAddress();
     for(int i = 0; i < offsets_.size(); i++)
     {
-        temp += offsets_[i];
-        ReadProcessMemory(ffxiv_->getHandle(), (void*)(temp), &temp, sizeof(DWORD), 0);
+        address += offsets_[i];
+        ReadProcessMemory(proc->getHandle(), (void*)(address), &address, sizeof(DWORD), 0);
     }
-    return temp;
+    return address;
 }
