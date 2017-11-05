@@ -1,8 +1,12 @@
 # FFXIV Party Logs
 --------------------------
 
+## ONLY WORKS ON DIRECTX9 FOR THE MOMENT
+
+### PRE-REQ
+[Microsoft C++ Redistrubutable 2015](https://www.microsoft.com/en-us/download/details.aspx?id=52685)
+
 ### DISCLAIMER:
-This program is a work in progress. The memory offsets need to be calibrated to work on PC's other than mine.
 This program reads from process memory. Use at your own risk!
 
 #### DESCRIPTION
