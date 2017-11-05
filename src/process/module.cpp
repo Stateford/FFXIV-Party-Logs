@@ -1,4 +1,5 @@
 #include "module.h"
+#include <iostream>
 
 // constructor
 Module::Module(TCHAR moduleName[])
@@ -18,7 +19,7 @@ Module::~Module()
  * Argument: Process*
  * Description: Finds the base address of a module based on the process provided
  */
-void Module::getModule(Process *proc)
+bool Module::getModule(Process *proc)
 {
     HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, proc->getPid());
 
@@ -30,8 +31,11 @@ void Module::getModule(Process *proc)
         if (!strcmp(nModule.szModule, moduleName_))
         {
             address_ = (DWORD)nModule.modBaseAddr;
+            return true;
         }
     } while (Module32Next(hSnapshot, &nModule));
+
+    return false;
 }
 
 DWORD Module::getAddress()

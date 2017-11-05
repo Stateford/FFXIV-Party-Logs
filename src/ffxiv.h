@@ -13,10 +13,11 @@ class FFXIV
 {
     friend class Menu;
 private:
-    Module *exe_;
+    Module *dx9_;
+    Module *dx11_;
     Process *ffxiv_;
-    char foo_[80];
     Offset *numberOfPartyMembers_;
+    bool directX11_;
     int partyMembers_;
     std::vector<Player*> allies_;
     std::vector<Player*> filteredAllies_;

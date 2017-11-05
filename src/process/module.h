@@ -13,6 +13,6 @@ private:
 public:
     Module(TCHAR[]);
     ~Module();
-    void getModule(Process*);
+    bool getModule(Process*);
     DWORD getAddress();
 };
