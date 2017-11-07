@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Ally::Ally(DWORD address)
+Ally::Ally(DWORD64 address)
 {
     address_ = address;
 }

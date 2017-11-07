@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-YOU::YOU(DWORD address)
+YOU::YOU(DWORD64 address)
 {
     address_ = address;
 }

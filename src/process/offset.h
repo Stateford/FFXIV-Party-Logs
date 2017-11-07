@@ -7,9 +7,10 @@
 class Offset
 {
 private:
-    std::vector<DWORD> offsets_;
+    std::vector<DWORD64> offsets_;
 public:
-    Offset(std::vector<DWORD> offset);
+    Offset(std::vector<DWORD64> offset);
     ~Offset();
-    DWORD getMemoryAddress(Process*, Module*);
+    DWORD64 getMemoryAddress(Process*, Module*);
+    DWORD64 getMemoryAddress64(Process* proc, Module* module);
 };

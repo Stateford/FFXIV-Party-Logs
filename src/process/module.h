@@ -8,7 +8,7 @@ class Module
 {
 private:
     MODULEENTRY32 nModule;
-    DWORD address_;
+    DWORD64 address_;
     bool bit64_;
     TCHAR* moduleName_;
 public:
@@ -16,5 +16,5 @@ public:
     ~Module();
     bool getModule(Process*);
     bool getModule32bit(Process*);
-    DWORD getAddress();
+    DWORD64 getAddress();
 };

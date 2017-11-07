@@ -18,7 +18,7 @@ Menu::~Menu()
 void Menu::displayAllies()
 {
     // update play characters names
-    fflogs_->updateNames();
+    fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
     
 
     SetConsoleTextAttribute(hConsole_, 7);
@@ -37,7 +37,7 @@ void Menu::displayAllies()
         {
             SetConsoleTextAttribute(hConsole_, 23);
         }
-        fflogs_->filteredAllies_[i]->display();
+        fflogs_->arch_->getFilteredAllies()[i]->display();
     }
     // this prevents the colors from breaking
     SetConsoleTextAttribute(hConsole_, 7);
@@ -56,12 +56,22 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
     std::cout.flush();
     system("CLS");
     displayAllies();
+    prevPartySize_ = fflogs_->partyMembers_;
+
 
     while(true)
     {
         DWORD count;
-        
-        redraw();
+
+        // reduce flickering with GetAsyncKeyState() or GetKeyState() possibly...
+        // requires more testing
+        /*
+        if(prevPartySize_ != fflogs_->partyMembers_)
+        {
+            prevPartySize_ = fflogs_->partyMembers_;
+            redraw();
+        }
+        */
 
         if(WaitForSingleObject(hstdin, 0) == WAIT_OBJECT_0)
         {
@@ -88,7 +98,7 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
                     }
                     break;
                 case VK_RETURN:
-                    fflogs_->filteredAllies_[currentMenuSelection_]->openBrowser();
+                    fflogs_->arch_->getFilteredAllies()[currentMenuSelection_]->openBrowser();
                     break;
                 default:
                     redraw();
