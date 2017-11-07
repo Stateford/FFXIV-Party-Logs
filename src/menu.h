@@ -6,8 +6,9 @@ class Menu
 {
 private:
     int currentMenuSelection_;
+    int prevPartySize_;
     FFXIV *fflogs_;
-    // console object
+    // console objects
     HANDLE hConsole_;
     HANDLE hstdin_;
 public:

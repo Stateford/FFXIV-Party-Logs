@@ -5,7 +5,7 @@
 class YOU : public Player
 {
 public:
-    YOU(DWORD);
+    YOU(DWORD64);
     ~YOU();
     void display();
 };

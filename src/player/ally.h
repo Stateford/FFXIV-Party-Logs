@@ -5,7 +5,7 @@
 class Ally : public Player
 {
 public:
-    Ally(DWORD);
+    Ally(DWORD64);
     ~Ally();
     void display();
 };

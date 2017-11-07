@@ -8,7 +8,7 @@ class Player
 public:
     std::string baseUrl_ = "https://www.fflogs.com/search/?term=";
     char name_[80];
-    DWORD address_;
+    DWORD64 address_;
     virtual void display() = 0;
     void openBrowser();
     bool compare(Player*);

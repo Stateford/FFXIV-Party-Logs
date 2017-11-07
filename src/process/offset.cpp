@@ -1,6 +1,8 @@
 #include "offset.h"
 
-Offset::Offset(std::vector<DWORD> offset)
+#include <iostream>
+
+Offset::Offset(std::vector<DWORD64> offset)
 {
     offsets_ = offset;
 }
@@ -13,14 +15,26 @@ Offset::~Offset()
 /*
  * Returns the memory address listed at the offset
  */
-DWORD Offset::getMemoryAddress(Process* proc, Module* module)
+DWORD64 Offset::getMemoryAddress(Process* proc, Module* module)
 {
     // get offset from the module
-    DWORD address = module->getAddress();
+    DWORD64 address = module->getAddress();
     for(int i = 0; i < offsets_.size(); i++)
     {
         address += offsets_[i];
         ReadProcessMemory(proc->getHandle(), (void*)(address), &address, sizeof(DWORD), 0);
+    }
+    return address;
+}
+
+DWORD64 Offset::getMemoryAddress64(Process* proc, Module* module)
+{
+    // get offset from the module
+    DWORD64 address = module->getAddress();
+    for (int i = 0; i < offsets_.size(); i++)
+    {
+        address += offsets_[i];
+        ReadProcessMemory(proc->getHandle(), (void*)(address), &address, sizeof(DWORD64), 0);
     }
     return address;
 }
