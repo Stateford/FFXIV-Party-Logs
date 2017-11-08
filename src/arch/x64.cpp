@@ -10,10 +10,7 @@ x64::x64(Process* proc)
     {
         Arch::x64 = true;
     }
-    else
-    {
-        Arch::x64 = false;
-    }
+
     createAllies();
 }
 

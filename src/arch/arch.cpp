@@ -1,7 +1,8 @@
 #include "arch.h"
+#include <iostream>
 
 
-bool Arch::x64 = true;
+bool Arch::x64 = false;
 
 Arch::Arch()
 {
@@ -27,7 +28,7 @@ bool Arch::checkArrayForDoubles(std::string name)
 {
     for (auto &p : filteredAllies_)
     {
-        if (p->name_ == name)
+        if (p->name_ == name )
         {
             return true;
         }
@@ -42,7 +43,8 @@ void Arch::filterAllies()
     filteredAllies_.push_back(allies_[0]);
     for (auto &p : allies_)
     {
-        if (!checkArrayForDoubles(p->name_))
+        // dont add doubles or empty arrays
+        if (!checkArrayForDoubles(p->name_) && p->name_[0] != NULL)
         {
             filteredAllies_.push_back(p);
         }
