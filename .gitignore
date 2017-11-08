@@ -3,6 +3,8 @@
 /Release/
 /full release/
 
+/src/fflogs/
+
 
 *.vcxproj
 *.vcxproj.*
