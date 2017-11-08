@@ -28,9 +28,12 @@ void Menu::displayAllies()
 
     // this is for debugging purposes
     std::cout << "Number of people in the party: ";
-    std::cout << fflogs_->partyMembers_ << "\n";
+    //std::cout << fflogs_->partyMembers_ << "\n";
+    std::cout << fflogs_->arch_->getFilteredAllies().size() << "\n";
 
-    for(int i = 0; i < fflogs_->partyMembers_; i++)
+
+    //for(int i = 0; i < fflogs_->partyMembers_; i++)
+    for (int i = 0; i < fflogs_->arch_->getFilteredAllies().size(); i++)
     {
         SetConsoleTextAttribute(hConsole_, 7);
         if (i == currentMenuSelection_)
@@ -90,7 +93,7 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
                     }
                     break;
                 case VK_DOWN:
-                    if(currentMenuSelection_ < fflogs_->partyMembers_ - 1)
+                    if(currentMenuSelection_ < fflogs_->arch_->getFilteredAllies().size() - 1)
                     {
                         currentMenuSelection_++;
                         redraw();
