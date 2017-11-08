@@ -63,15 +63,14 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
     {
         DWORD count;
 
-        // reduce flickering with GetAsyncKeyState() or GetKeyState() possibly...
-        // requires more testing
-        /*
+        fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
+
         if(prevPartySize_ != fflogs_->partyMembers_)
         {
             prevPartySize_ = fflogs_->partyMembers_;
             redraw();
         }
-        */
+
 
         if(WaitForSingleObject(hstdin, 0) == WAIT_OBJECT_0)
         {
@@ -101,7 +100,7 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
                     fflogs_->arch_->getFilteredAllies()[currentMenuSelection_]->openBrowser();
                     break;
                 default:
-                    redraw();
+                    //redraw();
                     break;
                 }
             }
