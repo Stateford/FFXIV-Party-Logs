@@ -20,9 +20,11 @@ This program reads the names of party members by memory and opens their username
 -Doesn't update cross-world parties  
 
 #### TODO
+=======
+-Reduce flicker  
 -Crossworld Parties  
--Add stats directly to program  
 -UI  
+-Add stats directly to ui  
 
 -----------------------------------------
 ## [DOWNLOAD](https://github.com/idietmoran/FFXIV-Party-Logs/releases)
