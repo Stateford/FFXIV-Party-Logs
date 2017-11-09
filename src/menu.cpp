@@ -2,7 +2,6 @@
 #include <iostream>
 #include <thread>
 
-
 // constructor
 Menu::Menu()
 {

@@ -2,21 +2,6 @@
 #include <thread>
 #include <iostream>
 
-void foo(int &a)
-{
-    while(true)
-    {
-        a++;
-    }
-}
-
-void bar(int a)
-{
-    while(true)
-    {
-        std::cout << a << std::endl;
-    }
-}
 
 int main()
 {
