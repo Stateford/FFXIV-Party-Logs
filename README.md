@@ -20,7 +20,7 @@ This program reads the names of party members by memory and opens their username
 -Doesn't update cross-world parties  
 
 #### TODO
-=======  
+----------------
 -Crossworld Parties  
 -Add stats directly to program  
 -UI  
