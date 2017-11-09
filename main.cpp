@@ -5,7 +5,6 @@
 
 int main()
 {
-    int a = 0;
     Menu menu;
 
     std::thread t1([=, &menu] { menu.start(); });
