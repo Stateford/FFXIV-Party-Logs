@@ -1,9 +1,7 @@
 #include "ffxiv.h"
-#include "player/you.h"
 #include "arch/x64.h"
 #include "arch/x86.h"
 #include <iostream>
-#include <Windows.h>
 
 // constructor
 FFXIV::FFXIV()

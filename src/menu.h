@@ -8,6 +8,7 @@ private:
     int currentMenuSelection_;
     int prevPartySize_;
     FFXIV *fflogs_;
+    bool live_;
     // console objects
     HANDLE hConsole_;
     HANDLE hstdin_;
