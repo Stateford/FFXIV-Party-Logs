@@ -20,37 +20,21 @@ Menu::~Menu()
 void Menu::displayAllies()
 {
     // update play characters names
-    fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
+    //fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
     
 
     SetConsoleTextAttribute(hConsole_, 7);
     // display title
     std::cout << "FFXIV Party Logs\n";
     std::cout << "--------------------\n";
-
-    // this is for debugging purposes
-    std::cout << "Number of people in the party: ";
-    //std::cout << fflogs_->partyMembers_ << "\n";
-    std::cout << fflogs_->arch_->getFilteredAllies().size() << "\n";
-
+    
 
     /*
-     * if the size of filteredAllies_ is less than party members,
-     * display number of elements in filteredAllies_ instead of
-     * party members, or cause vector overflow
+     * NOTE: It's impossible to determine people no longer in the party without parsing the chat log
+     * TODO: Maybe in the future
      */
-    int numOfPartyMembers;
 
-    if(fflogs_->arch_->getFilteredAllies().size() < fflogs_->partyMembers_)
-    {
-        numOfPartyMembers = fflogs_->arch_->getFilteredAllies().size();
-    }
-    else
-    {
-        numOfPartyMembers = fflogs_->partyMembers_;
-    }
-
-    for (int i = 0; i < numOfPartyMembers; i++)
+    for (int i = 0; i < fflogs_->arch_->getFilteredAllies().size(); i++)
     {
         SetConsoleTextAttribute(hConsole_, 7);
         if (i == currentMenuSelection_)
@@ -78,13 +62,8 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
     displayAllies();
     prevPartySize_ = fflogs_->partyMembers_;
 
-    
-
     while(true)
     {
-        DWORD count;
-
-        //fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
 
         if(prevPartySize_ != fflogs_->partyMembers_)
         {
@@ -122,42 +101,6 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
         }
         
         Sleep(1);
-
-        /*
-        else if(WaitForSingleObject(hstdin, 0) == WAIT_OBJECT_0)
-        {
-            ReadConsoleInput(hstdin, &event, 1, &count);
-            // on keydown
-            if((event.EventType == KEY_EVENT) && event.Event.KeyEvent.bKeyDown)
-            {
-                switch(event.Event.KeyEvent.wVirtualKeyCode)
-                {
-                case VK_ESCAPE:
-                    exit(0);
-                case VK_UP:
-                    if(currentMenuSelection_ > 0)
-                    {
-                        currentMenuSelection_--;
-                        redraw();
-                    }
-                    break;
-                case VK_DOWN:
-                    if(currentMenuSelection_ < fflogs_->arch_->getFilteredAllies().size() - 1)
-                    {
-                        currentMenuSelection_++;
-                        redraw();
-                    }
-                    break;
-                case VK_RETURN:
-                    fflogs_->arch_->getFilteredAllies()[currentMenuSelection_]->openBrowser();
-                    break;
-                default:
-                    //redraw();
-                    break;
-                }
-            }
-        }
-        */
     }
 }
 
@@ -171,7 +114,6 @@ void Menu::start()
     GetConsoleMode(hstdin, &mode);
     SetConsoleMode(hstdin, 0);
 
-
     std::thread t1([=, &mode, &event, &hstdin] { alliesMenu(mode, event, hstdin); });
 
     std::thread t2([=] { 
@@ -182,7 +124,9 @@ void Menu::start()
         } 
     });
 
+    // these threads will run in parallel.
+    // one thread will power the menu
+    // the other thread will updatenames
     t1.join();
     t2.join();
-    //alliesMenu(mode, event, hstdin);
 }
