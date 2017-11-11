@@ -3,9 +3,9 @@
 /Release/
 /full release/
 
-/src/fflogs/
-
-
+.gitmodules
+packages.config
+*.iscc
 *.vcxproj
 *.vcxproj.*
 *.aps

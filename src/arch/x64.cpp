@@ -1,3 +1,7 @@
+/*
+ * This file is for running the game directx11. When the game is launched in directx11, the game
+ * is running in 64-bit, which requires being able to read 64-bit hexadecimal addresses
+ */
 #include "x64.h"
 
 

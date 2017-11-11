@@ -1,7 +1,5 @@
 #include "src/menu.h"
 #include <thread>
-#include <iostream>
-
 
 int main()
 {
