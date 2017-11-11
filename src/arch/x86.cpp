@@ -1,3 +1,8 @@
+/*
+* This file is for running the game directx9. When the game is launched in directx9, the game
+* is running in 32-bit, which requires being able to read and add 32-bit hexadecimal addresses.
+* Storing the address with the sizeof a DWORD64 will return the wrong address.
+*/
 #include "x86.h"
 #include <iostream>
 

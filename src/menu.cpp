@@ -7,6 +7,7 @@ Menu::Menu()
 {
     fflogs_ = new FFXIV();
     hConsole_ = GetStdHandle(STD_OUTPUT_HANDLE);
+    live_ = true;
 }
 
 // deconstructor
@@ -61,7 +62,7 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
     displayAllies();
     prevPartySize_ = fflogs_->partyMembers_;
 
-    while(true)
+    while(live_)
     {
 
         if(prevPartySize_ != fflogs_->partyMembers_)
@@ -69,11 +70,12 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
             prevPartySize_ = fflogs_->partyMembers_;
             redraw();
         }
+
         bool isConsoleWindowFocussed = (GetConsoleWindow() == GetForegroundWindow());
         
         if(GetAsyncKeyState(VK_ESCAPE) & 0x1 && isConsoleWindowFocussed)
         {
-            exit(0);
+            live_ = false;
         }
 
         if(GetAsyncKeyState(VK_UP) & 0x1 && isConsoleWindowFocussed)
@@ -116,10 +118,10 @@ void Menu::start()
     std::thread t1([=, &mode, &event, &hstdin] { alliesMenu(mode, event, hstdin); });
 
     std::thread t2([=] { 
-        while (true)
+        while (live_)
         {
             fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
-            Sleep(2);
+            Sleep(1);
         } 
     });
 
