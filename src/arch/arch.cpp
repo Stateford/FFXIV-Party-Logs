@@ -1,5 +1,4 @@
 #include "arch.h"
-#include <iostream>
 
 
 bool Arch::x64 = false;
@@ -39,7 +38,7 @@ bool Arch::checkArrayForDoubles(std::string name)
 void Arch::filterAllies()
 {
     filteredAllies_.clear();
-    filteredAllies_.reserve(8);
+    //filteredAllies_.reserve(8);
     filteredAllies_.push_back(allies_[0]);
     for (auto &p : allies_)
     {
