@@ -4,9 +4,6 @@
 ### DISCLAIMER
 This program reads from process memory. Use at your own risk!
 
-### PRE-REQ
-[Microsoft C++ Redistrubutable 2015](https://www.microsoft.com/en-us/download/details.aspx?id=52685)
-
 #### DESCRIPTION
 This program reads the names of party members by memory and opens their username in a search page in your default browser.
 
@@ -16,17 +13,14 @@ This program reads the names of party members by memory and opens their username
 [Youtube](https://youtu.be/r9TKVYfq_b0)
 
 #### Known Issues
-- Doesn't update cross-world parties  
+- Doesn't update cross-world parties (The memory addresses for cross-world are not static, it's going to take some digging and some patient people)
+- Lists previous members in the party list until someone new overwrites their position (thank SE for this, still looking for solution)
 
 #### TODO
-
-=======
 ----------------
-- Crossworld Parties  
+- Cross-world Parties  
 - Add stats directly to program  
 - UI  
 
-
 -----------------------------------------
 ## [DOWNLOAD](https://github.com/idietmoran/FFXIV-Party-Logs/releases)
-
