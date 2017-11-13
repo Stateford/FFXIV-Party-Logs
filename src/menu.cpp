@@ -20,7 +20,7 @@ Menu::~Menu()
 void Menu::displayAllies()
 {
     // update play characters names
-    //fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
+    fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
     
 
     SetConsoleTextAttribute(hConsole_, 7);
@@ -28,7 +28,6 @@ void Menu::displayAllies()
     std::cout << "FFXIV Party Logs\n";
     std::cout << "--------------------\n";
     
-
     /*
      * NOTE: It's impossible to determine people no longer in the party without parsing the chat log
      * TODO: Maybe in the future
@@ -41,6 +40,7 @@ void Menu::displayAllies()
         {
             SetConsoleTextAttribute(hConsole_, 23);
         }
+        //fflogs_->arch_->getFilteredAllies()[i]->display();
         fflogs_->arch_->getFilteredAllies()[i]->display();
     }
     // this prevents the colors from breaking
@@ -50,14 +50,14 @@ void Menu::displayAllies()
 
 void Menu::redraw()
 {
-    std::cout.flush();
+    //std::cout.flush();
     system("CLS");
     displayAllies();
 }
 
 void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
 {
-    std::cout.flush();
+    //std::cout.flush();
     system("CLS");
     displayAllies();
     prevPartySize_ = fflogs_->partyMembers_;
@@ -117,17 +117,5 @@ void Menu::start()
 
     std::thread t1([=, &mode, &event, &hstdin] { alliesMenu(mode, event, hstdin); });
 
-    std::thread t2([=] { 
-        while (live_)
-        {
-            fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
-            Sleep(1);
-        } 
-    });
-
-    // these threads will run in parallel.
-    // one thread will power the menu
-    // the other thread will updatenames
     t1.join();
-    t2.join();
 }

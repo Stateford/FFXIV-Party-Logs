@@ -1,5 +1,4 @@
 #include "module.h"
-#include <iostream>
 
 // constructor
 Module::Module(TCHAR moduleName[])

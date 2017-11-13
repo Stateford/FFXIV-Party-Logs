@@ -29,7 +29,6 @@ x64::~x64()
 
 void x64::createAllies()
 {
-    allies_.reserve(8);
     // dx11 64-bit offsets
     allies_.push_back(new YOU(0x1828AE1));
     allies_.push_back(new Ally(0x184A170));
