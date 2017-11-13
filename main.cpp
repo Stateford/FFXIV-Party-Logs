@@ -1,6 +1,7 @@
 #include "src/menu.h"
 #include <thread>
 
+
 int main()
 {
     Menu menu;

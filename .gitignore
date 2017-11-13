@@ -6,6 +6,7 @@
 
 .gitmodules
 packages.config
+*.iss
 *.iscc
 *.vcxproj
 *.vcxproj.*
