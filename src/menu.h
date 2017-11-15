@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ffxiv.h"
-
 class Menu
 {
 private:
@@ -12,6 +11,7 @@ private:
     // console objects
     HANDLE hConsole_;
     HANDLE hstdin_;
+    bool prevCrossWorldStatus_;
 public:
     Menu();
     ~Menu();

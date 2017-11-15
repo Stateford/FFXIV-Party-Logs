@@ -3,7 +3,7 @@
  * is running in 64-bit, which requires being able to read 64-bit hexadecimal addresses
  */
 #include "x64.h"
-
+#include <iostream>
 
 x64::x64(Process* proc)
 {
@@ -15,7 +15,7 @@ x64::x64(Process* proc)
         Arch::x64 = true;
     }
 
-    createAllies();
+    createAllies(proc);
 }
 
 x64::~x64()
@@ -27,7 +27,7 @@ x64::~x64()
     numberOfPartyMembers_ = nullptr;
 }
 
-void x64::createAllies()
+void x64::createAllies(Process* proc)
 {
     // dx11 64-bit offsets
     allies_.push_back(new YOU(0x1828AE1));
@@ -39,9 +39,28 @@ void x64::createAllies()
     allies_.push_back(new Ally(0x184AC10));
     allies_.push_back(new Ally(0x184A390));
     allies_.push_back(new Ally(0x184AE30));
+
+    alliesCW_.push_back(allies_[0]); // YOU
+    DWORD64 address = exe_->getAddress();
+    address += 0x017E6620;
+
+    ReadProcessMemory(proc->getHandle(), (void*)address, &address, sizeof(DWORD64), 0);
+    address += 0x2E8;
+    alliesCW_.push_back(new Ally(address));
+
+
+    for(int i = 0; i < 6; i++)
+    {
+        alliesCW_.push_back(new Ally(address += 0x48));
+    }
 }
 
 void x64::updateNumberOfPartyMembers(Process* proc, int &partyMembers)
 {
     ReadProcessMemory(proc->getHandle(), (void*)(numberOfPartyMembers_->getMemoryAddress64(proc, exe_)), &partyMembers, sizeof(int), 0);
+}
+
+void x64::checkCrossWorldParty(Process* proc)
+{
+    ReadProcessMemory(proc->getHandle(), (void*)(exe_->getAddress() + 0x1848F0C), &inCrossWorldParty_, 1, 0);
 }

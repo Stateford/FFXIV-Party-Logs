@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.0.6]
+### Added
+- Cross-world party support for DX11
+
 ## [0.0.5]
 ### Added
 - Attempts to bring up users page. If multiple users are found, the search page will be brought up.

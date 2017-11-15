@@ -21,7 +21,7 @@ x86::x86(Process* proc)
         Sleep(3000);
         exit(0);
     }
-    createAllies();
+    createAllies(proc);
 }
 
 
@@ -34,7 +34,7 @@ x86::~x86()
     numberOfPartyMembers_ = nullptr;
 }
 
-void x86::createAllies()
+void x86::createAllies(Process* proc)
 {
     allies_.reserve(8);
     // dx9 32-bit offsets
@@ -53,4 +53,9 @@ void x86::createAllies()
 void x86::updateNumberOfPartyMembers(Process *proc, int &partyMembers)
 {
     ReadProcessMemory(proc->getHandle(), (void*)(numberOfPartyMembers_->getMemoryAddress(proc, exe_)), &partyMembers, sizeof(int), 0);
+}
+
+void x86::checkCrossWorldParty(Process* proc)
+{
+    // do nothing for the time being
 }

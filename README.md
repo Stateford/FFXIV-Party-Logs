@@ -13,12 +13,12 @@ This program reads the names of party members by memory and opens their username
 [Youtube](https://youtu.be/r9TKVYfq_b0)
 
 #### Known Issues
-- Doesn't update cross-world parties (The memory addresses for cross-world are not static, it's going to take some digging and some patient people)
+- Doesn't update cross-world parties on DX9
 - Lists previous members in the party list until someone new overwrites their position (thank SE for this, still looking for solution)
 
 #### TODO
 ----------------
-- Cross-world Parties  
+- Cross-world Parties for DX9
 - Add stats directly to program  
 - UI  
 

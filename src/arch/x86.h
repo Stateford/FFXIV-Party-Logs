@@ -7,6 +7,7 @@ public:
     x86(Process*);
     ~x86();
     void updateNumberOfPartyMembers(Process*, int&) override;
-    void createAllies() override;
+    void createAllies(Process*) override;
+    void checkCrossWorldParty(Process* proc) override;
 };
 
