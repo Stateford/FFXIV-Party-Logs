@@ -13,18 +13,25 @@ class Arch
 protected:
     Module *exe_;
     Offset *numberOfPartyMembers_;
+    bool inCrossWorldParty_ = false;
     std::vector<Player*> allies_;
     std::vector<Player*> filteredAllies_;
+    std::vector<Player*> alliesCW_;
+    std::vector<Player*> filteredAlliesCW_;
 public:
     Arch();
     virtual ~Arch() = 0;
-    virtual void createAllies() = 0;
+    virtual void createAllies(Process*) = 0;
     virtual void updateNumberOfPartyMembers(Process*, int&) = 0;
+    virtual void checkCrossWorldParty(Process*) = 0;
     static bool x64;
     void deleteAllies();
     bool checkArrayForDoubles(std::string);
+    bool checkArrayForDoublesCW(std::string name);
     void filterAllies();
     void updateNames(Process*, int&);
     std::vector<Player*> getFilteredAllies();
+    std::vector<Player*> getFilteredAlliesCW();
+    bool getCrossWorldStatus();
 };
 

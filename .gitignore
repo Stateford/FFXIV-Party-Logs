@@ -3,6 +3,7 @@
 /Release/
 /full release/
 /Output/
+/src/config/
 
 .gitmodules
 packages.config
