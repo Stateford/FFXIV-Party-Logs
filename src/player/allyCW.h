@@ -2,11 +2,11 @@
 
 #include "player.h"
 
-class Ally : public Player
+class AllyCW : public Player
 {
 public:
-    Ally(DWORD64);
-    ~Ally();
+    AllyCW(DWORD64);
+    ~AllyCW();
     void display();
     void updateName(Process*, Module*);
 };

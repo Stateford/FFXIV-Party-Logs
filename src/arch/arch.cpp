@@ -75,15 +75,16 @@ void Arch::filterAllies()
 
 }
 
+
 void Arch::updateNames(Process* proc, int &partyMembers)
 {
     for (auto &p : allies_)
     {
-        ReadProcessMemory(proc->getHandle(), (void*)(exe_->getAddress() + p->address_), &p->name_, 80, 0);
+        p->updateName(proc, exe_);
     }
     for(auto &p : alliesCW_)
     {
-        ReadProcessMemory(proc->getHandle(), (void*)(p->address_), &p->name_, 80, 0);
+        p->updateName(proc, exe_);
     }
 
     filterAllies();

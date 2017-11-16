@@ -8,4 +8,5 @@ public:
     YOU(DWORD64);
     ~YOU();
     void display();
+    void updateName(Process*, Module*);
 };

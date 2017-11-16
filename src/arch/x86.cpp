@@ -36,7 +36,6 @@ x86::~x86()
 
 void x86::createAllies(Process* proc)
 {
-    allies_.reserve(8);
     // dx9 32-bit offsets
     allies_.push_back(new YOU(0x115E431));
     allies_.push_back(new Ally(0x117AA30));
@@ -47,6 +46,22 @@ void x86::createAllies(Process* proc)
     allies_.push_back(new Ally(0x117B4D0));
     allies_.push_back(new Ally(0x117B6F0));
     allies_.push_back(new Ally(0x117B910));
+
+    
+    alliesCW_.push_back(allies_[0]); // YOU
+    
+    DWORD address = exe_->getAddress();
+    address += 0x010287A4;
+
+    ReadProcessMemory(proc->getHandle(), (void*)address, &address, sizeof(DWORD64), 0);
+    address += 0x2E0;
+    alliesCW_.push_back(new AllyCW(address));
+
+    for (int i = 0; i < 6; i++)
+    {
+        alliesCW_.push_back(new AllyCW(address += 0x48));
+    }
+    
 }
 
 
@@ -58,4 +73,5 @@ void x86::updateNumberOfPartyMembers(Process *proc, int &partyMembers)
 void x86::checkCrossWorldParty(Process* proc)
 {
     // do nothing for the time being
+    ReadProcessMemory(proc->getHandle(), (void*)(exe_->getAddress() + 0x1179BE4), &inCrossWorldParty_, 1, 0);
 }
