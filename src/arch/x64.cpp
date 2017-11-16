@@ -46,12 +46,12 @@ void x64::createAllies(Process* proc)
 
     ReadProcessMemory(proc->getHandle(), (void*)address, &address, sizeof(DWORD64), 0);
     address += 0x2E8;
-    alliesCW_.push_back(new Ally(address));
+    alliesCW_.push_back(new AllyCW(address));
 
 
     for(int i = 0; i < 6; i++)
     {
-        alliesCW_.push_back(new Ally(address += 0x48));
+        alliesCW_.push_back(new AllyCW(address += 0x48));
     }
 }
 

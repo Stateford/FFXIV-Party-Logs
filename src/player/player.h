@@ -3,6 +3,8 @@
 #include <map>
 #include <string>
 #include <Windows.h>
+#include "../process/module.h"
+#include "../process/process.h"
 
 class Player
 {
@@ -16,6 +18,7 @@ public:
     DWORD64 address_;
     char name_[80];
     virtual void display() = 0;
+    virtual void updateName(Process*, Module*) = 0;
     bool characterCheck();
     void charRequest(std::wstring, std::vector<std::wstring>,  std::wstring, std::wstring&, int&);
     bool getCharId();

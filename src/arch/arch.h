@@ -7,6 +7,7 @@
 #include "../player/player.h"
 #include "../player/you.h"
 #include "../player/ally.h"
+#include "../player/allyCW.h"
 
 class Arch
 {

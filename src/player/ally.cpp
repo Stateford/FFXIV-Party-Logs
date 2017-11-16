@@ -16,3 +16,8 @@ void Ally::display()
 {
     std::cout << name_ << "\n";
 }
+
+void Ally::updateName(Process* proc, Module* exe)
+{
+    ReadProcessMemory(proc->getHandle(), (void*)(exe->getAddress() + address_), &name_, 80, 0);
+}

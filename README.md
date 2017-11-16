@@ -8,17 +8,11 @@ This program reads from process memory. Use at your own risk!
 This program reads the names of party members by memory and opens their username in a search page in your default browser.
 
 #### EXAMPLE
-![](https://media.giphy.com/media/xUOxfkTf6NHqzHwgyQ/giphy.gif)
-
-[Youtube](https://youtu.be/r9TKVYfq_b0)
-
-#### Known Issues
-- Doesn't update cross-world parties on DX9
-- Lists previous members in the party list until someone new overwrites their position (thank SE for this, still looking for solution)
+![](https://i.imgur.com/anW8rD2.png)
+[Youtube](https://youtu.be/4OjrkHsZ1fM)
 
 #### TODO
 ----------------
-- Cross-world Parties for DX9
 - Add stats directly to program  
 - UI  
 
