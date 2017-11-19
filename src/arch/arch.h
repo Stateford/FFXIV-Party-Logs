@@ -34,5 +34,6 @@ public:
     std::vector<Player*> getFilteredAllies();
     std::vector<Player*> getFilteredAlliesCW();
     bool getCrossWorldStatus();
+    void openAll(int);
 };
 

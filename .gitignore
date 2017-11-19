@@ -4,6 +4,7 @@
 /full release/
 /Output/
 /src/config/
+/src/gui/
 
 .gitmodules
 packages.config

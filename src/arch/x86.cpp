@@ -6,7 +6,7 @@
 #include "x86.h"
 #include <iostream>
 
-
+// constructor
 x86::x86(Process* proc)
 {
     // handle error when getting invalid module
@@ -24,7 +24,7 @@ x86::x86(Process* proc)
     createAllies(proc);
 }
 
-
+// destructor
 x86::~x86()
 {
     deleteAllies();
@@ -34,6 +34,7 @@ x86::~x86()
     numberOfPartyMembers_ = nullptr;
 }
 
+// create allies
 void x86::createAllies(Process* proc)
 {
     // dx9 32-bit offsets
@@ -47,7 +48,7 @@ void x86::createAllies(Process* proc)
     allies_.push_back(new Ally(0x117B6F0));
     allies_.push_back(new Ally(0x117B910));
 
-    
+    // create crossworld allies
     alliesCW_.push_back(allies_[0]); // YOU
     
     DWORD address = exe_->getAddress();
@@ -64,12 +65,13 @@ void x86::createAllies(Process* proc)
     
 }
 
-
+// get the number of party members
 void x86::updateNumberOfPartyMembers(Process *proc, int &partyMembers)
 {
     ReadProcessMemory(proc->getHandle(), (void*)(numberOfPartyMembers_->getMemoryAddress(proc, exe_)), &partyMembers, sizeof(int), 0);
 }
 
+// check if currently crossworld party
 void x86::checkCrossWorldParty(Process* proc)
 {
     // do nothing for the time being

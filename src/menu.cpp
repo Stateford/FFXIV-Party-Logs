@@ -1,6 +1,7 @@
 #include "menu.h"
 #include <iostream>
 #include <thread>
+#include <chrono>
 
 // constructor
 Menu::Menu()
@@ -20,21 +21,22 @@ Menu::~Menu()
 void Menu::displayAllies()
 {
     // update play characters names
-    fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
-    
-
+    //fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
     int partyMembers = fflogs_->partyMembers_;
 
+    // if currentMenuSelection is greater than the number of party members
+    // set currentMenuSelection equal to number of party members so the
+    // cursor doesn't go off screen
     if(currentMenuSelection_ > fflogs_->partyMembers_)
     {
-        currentMenuSelection_ = fflogs_->partyMembers_ - 1;
+        currentMenuSelection_ = fflogs_->partyMembers_;
     }
-
+    
     SetConsoleTextAttribute(hConsole_, 7);
     // display title
     std::cout << "FFXIV Party Logs\n";
     std::cout << "--------------------";
-    
+
     if(fflogs_->arch_->getCrossWorldStatus())
     {
         SetConsoleTextAttribute(hConsole_, 13);
@@ -80,11 +82,17 @@ void Menu::displayAllies()
             fflogs_->arch_->getFilteredAllies()[i]->display();
         }
     }
+    SetConsoleTextAttribute(hConsole_, 7);
+
+    if(currentMenuSelection_ == partyMembers)
+    {
+        SetConsoleTextAttribute(hConsole_, 23);
+    }
+    std::cout << "ALL" << std::endl;
 
     // this prevents the colors from breaking
     SetConsoleTextAttribute(hConsole_, 7);
 }
-
 
 void Menu::redraw()
 {
@@ -94,15 +102,19 @@ void Menu::redraw()
 
 void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
 {
-    system("CLS");
+    
+    mu_.lock();     // lock the thread
+    system("CLS");  // clear the screen
+    // display allies
     displayAllies();
+    // set previous values
     prevPartySize_ = fflogs_->partyMembers_;
     prevCrossWorldStatus_ = fflogs_->arch_->getCrossWorldStatus();
+    mu_.unlock();   // unlock the thread
 
     while(live_)
     {
-        fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
-
+        mu_.lock();     // lock the thread
 
         // checks if party size changes, or party changes to crossworld and displays the changes
         if(prevPartySize_ != fflogs_->partyMembers_ || prevCrossWorldStatus_ != fflogs_->arch_->getCrossWorldStatus())
@@ -115,7 +127,7 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
         // checks if console is currently focused
         bool isConsoleWindowFocussed = (GetConsoleWindow() == GetForegroundWindow());
         
-
+        // checks key states
         if(GetAsyncKeyState(VK_ESCAPE) & 0x1 && isConsoleWindowFocussed)
         {
             live_ = false;
@@ -132,7 +144,7 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
 
         if(GetAsyncKeyState(VK_DOWN) & 0x1 && isConsoleWindowFocussed)
         {
-            if (currentMenuSelection_ < fflogs_->partyMembers_ - 1)
+            if (currentMenuSelection_ < fflogs_->partyMembers_)
             {
                 currentMenuSelection_++;
                 redraw();
@@ -141,7 +153,14 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
 
         if(GetAsyncKeyState(VK_RETURN) & 0x1 && isConsoleWindowFocussed)
         {
-            if(fflogs_->arch_->getCrossWorldStatus())
+
+            if(currentMenuSelection_ == fflogs_->partyMembers_)
+            {
+                // TODO: code here for ALL
+                fflogs_->arch_->openAll(fflogs_->partyMembers_);
+            }
+
+            else if(fflogs_->arch_->getCrossWorldStatus())
             {
                 fflogs_->arch_->getFilteredAlliesCW()[currentMenuSelection_]->openBrowser();
             }
@@ -150,13 +169,14 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
                 fflogs_->arch_->getFilteredAllies()[currentMenuSelection_]->openBrowser();
             }
         }
-        Sleep(1);
+        mu_.unlock();   // unlock the thread
+        std::this_thread::sleep_for(std::chrono::nanoseconds(2));
     }
 }
 
 void Menu::start()
 {
-    system("CLS");
+    system("CLS");  // clear the screen
     // initalize variables to contain input
     DWORD mode;
     INPUT_RECORD event;
@@ -164,7 +184,22 @@ void Menu::start()
     GetConsoleMode(hstdin, &mode);
     SetConsoleMode(hstdin, 0);
 
-    std::thread t1([=, &mode, &event, &hstdin] { alliesMenu(mode, event, hstdin); });
+    
+    // thread to update the menu
+    std::thread t1([=, &mode, &event, &hstdin]{ alliesMenu(mode, event, hstdin); });
+    // thread to get names
+    std::thread t2([=] { 
+        while (true)
+        {
+            mu_.lock(); // lock the thread
+            // update names
+            fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
+            mu_.unlock();   // unlock the thread
+            // sleep the thread
+            std::this_thread::sleep_for(std::chrono::nanoseconds(2));
+        }
+    });
 
+    t2.join();
     t1.join();
 }
