@@ -1,5 +1,10 @@
-#include "arch.h"
+/*
+ * Abstract class that is a base for x64, and x86. contains shared methods
+ * for each derived class
+ */
 
+#include "arch.h"
+#include <thread>
 
 bool Arch::x64 = false;
 
@@ -107,4 +112,46 @@ std::vector<Player*> Arch::getFilteredAlliesCW()
 bool Arch::getCrossWorldStatus()
 {
     return inCrossWorldParty_;
+}
+
+// opens all users in the web broswer in parallel
+void Arch::openAll(int partySize)
+{
+    if (getCrossWorldStatus())
+    {
+        // this will be garbage collected automatically thanks to RAII
+        std::vector<std::thread*> threads;
+        // create new threads
+        for (int i = 0; i < partySize; i++)
+        {
+            threads.push_back(new std::thread([=] 
+            {
+                filteredAlliesCW_[i]->openBrowser();
+            }));
+        }
+
+        // join all threads
+        for(auto &p : threads)
+        {
+            p->join();
+        }
+    }
+    else
+    {
+        // this will be garbage collected automatically thanks to RAII
+        std::vector<std::thread*> threads;
+        // create new threads
+        for (int i = 0; i < partySize; i++)
+        {
+            threads.push_back(new std::thread([=]
+            {
+                filteredAllies_[i]->openBrowser();
+            }));
+        }
+        // join all threads
+        for(auto &p : threads)
+        {
+            p->join();
+        }
+    }
 }

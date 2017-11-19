@@ -1,11 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.3]
+### Added
+- All button: opens all party members in the browser
+### Fixed
+- Race conditions for threads
+
 ## [1.0.1]
-## Added
+### Added
 - Checks for updates
 
 ## [1.0.0]
+### Added
 - Cross-world party support for DX9
 
 ## [0.0.6]

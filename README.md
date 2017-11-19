@@ -4,6 +4,9 @@
 ### DISCLAIMER
 This program reads from process memory. Use at your own risk!
 
+### Dependencies
+- [CPPRESTSDK](https://github.com/Microsoft/cpprestsdk)
+
 #### DESCRIPTION
 This program reads the names of party members by memory and opens their username in a search page in your default browser.
 

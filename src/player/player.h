@@ -19,10 +19,7 @@ public:
     char name_[80];
     virtual void display() = 0;
     virtual void updateName(Process*, Module*) = 0;
-    bool characterCheck();
-    void charRequest(std::wstring, std::vector<std::wstring>,  std::wstring, std::wstring&, int&);
     bool getCharId();
-    void parseJson(std::wstring*&);
     void parseSearch(std::wstring&);
     void openBrowser();
     bool compare(Player*);
