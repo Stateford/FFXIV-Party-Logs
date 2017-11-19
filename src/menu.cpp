@@ -22,7 +22,14 @@ void Menu::displayAllies()
     // update play characters names
     fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
     
+
     int partyMembers = fflogs_->partyMembers_;
+
+    if(currentMenuSelection_ > fflogs_->partyMembers_)
+    {
+        currentMenuSelection_ = fflogs_->partyMembers_ - 1;
+    }
+
     SetConsoleTextAttribute(hConsole_, 7);
     // display title
     std::cout << "FFXIV Party Logs\n";
@@ -72,28 +79,21 @@ void Menu::displayAllies()
             }
             fflogs_->arch_->getFilteredAllies()[i]->display();
         }
-        // this prevents the colors from breaking
     }
-    /*
-     * NOTE: It's impossible to determine people no longer in the party without parsing the chat log
-     * TODO: Maybe in the future
-     */
 
-    
+    // this prevents the colors from breaking
     SetConsoleTextAttribute(hConsole_, 7);
 }
 
 
 void Menu::redraw()
 {
-    //std::cout.flush();
     system("CLS");
     displayAllies();
 }
 
 void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
 {
-    //std::cout.flush();
     system("CLS");
     displayAllies();
     prevPartySize_ = fflogs_->partyMembers_;
@@ -112,8 +112,10 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
             redraw();
         }
 
+        // checks if console is currently focused
         bool isConsoleWindowFocussed = (GetConsoleWindow() == GetForegroundWindow());
         
+
         if(GetAsyncKeyState(VK_ESCAPE) & 0x1 && isConsoleWindowFocussed)
         {
             live_ = false;

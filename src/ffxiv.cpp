@@ -1,7 +1,6 @@
 #include "ffxiv.h"
 #include "arch/x64.h"
 #include "arch/x86.h"
-#include <iostream>
 
 // constructor
 FFXIV::FFXIV()

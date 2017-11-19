@@ -5,7 +5,6 @@
 #include "arch/arch.h"
 
 #include "player/ally.h"
-#include <vector>
 
 class FFXIV
 {

@@ -1,5 +1,4 @@
 #include "arch.h"
-#include <iostream>
 
 
 bool Arch::x64 = false;

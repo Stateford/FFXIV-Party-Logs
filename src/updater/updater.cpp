@@ -5,7 +5,7 @@
 
 Updater::Updater()
 {
-    currentVersion_ = L"1.0.1";
+    currentVersion_ = L"1.0.2";
     apiUrl_ = L"http://idietmoran.com/ffxiv/party-logs/latest";
     currentMenu_ = CHECKING;
 }
@@ -25,7 +25,7 @@ bool Updater::compareVersion()
     makeRequest();
 
     if (body_.empty())
-        return false;
+        return true;
     
     
 
