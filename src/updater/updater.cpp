@@ -5,7 +5,7 @@
 
 Updater::Updater()
 {
-    currentVersion_ = L"1.0.3";
+    currentVersion_ = L"1.0.4";
     apiUrl_ = L"http://idietmoran.com/ffxiv/party-logs/latest";
     currentMenu_ = CHECKING;
 }

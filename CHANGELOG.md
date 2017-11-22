@@ -1,5 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
+## [1.0.4]
+### Fixed
+- Patched for FFXIV patch 4.15
 
 ## [1.0.3]
 ### Added
