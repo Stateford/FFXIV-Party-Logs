@@ -11,7 +11,7 @@ x64::x64(Process* proc)
     // get window name
     exe_ = new Module("ffxiv_dx11.exe");
     // memory offests for dx11 number of party members
-    numberOfPartyMembers_ = new Offset({ 0x1807FB8, 0x38, 0x10, 0x208, 0x20 });
+    numberOfPartyMembers_ = new Offset({ 0x0180A038, 0x38, 0x18, 0x20, 0x20, 0x10 });
 
     // if dx11 (64-bit) set static x64 true
     if (exe_->getModule(proc))
@@ -36,20 +36,20 @@ x64::~x64()
 void x64::createAllies(Process* proc)
 {
     // dx11 64-bit offsets
-    allies_.push_back(new YOU(0x1828AE1));
-    allies_.push_back(new Ally(0x184A170));
-    allies_.push_back(new Ally(0x1849F50));
-    allies_.push_back(new Ally(0x184AC10));
-    allies_.push_back(new Ally(0x184A5B0));
-    allies_.push_back(new Ally(0x184A9F0));
-    allies_.push_back(new Ally(0x184A7D0));
-    allies_.push_back(new Ally(0x184A390));
-    allies_.push_back(new Ally(0x184AE30));
-
+    allies_.push_back(new YOU(0x182AB51));
+    allies_.push_back(new Ally(0x184BFD0));
+    allies_.push_back(new Ally(0x184C1F0));
+    allies_.push_back(new Ally(0X184C410));
+    allies_.push_back(new Ally(0x184C630));
+    allies_.push_back(new Ally(0x184C850));
+    allies_.push_back(new Ally(0x184CA70));
+    allies_.push_back(new Ally(0x184CC90));
+    allies_.push_back(new Ally(0X184CEB0));
+    
     // create crossworld allies
     alliesCW_.push_back(allies_[0]); // YOU
     DWORD64 address = exe_->getAddress();
-    address += 0x017E6620;
+    address += 0x017E86A0;
 
     ReadProcessMemory(proc->getHandle(), (void*)address, &address, sizeof(DWORD64), 0);
     address += 0x2E8;
@@ -71,5 +71,5 @@ void x64::updateNumberOfPartyMembers(Process* proc, int &partyMembers)
 // check if currently crossworld party
 void x64::checkCrossWorldParty(Process* proc)
 {
-    ReadProcessMemory(proc->getHandle(), (void*)(exe_->getAddress() + 0x1848F0C), &inCrossWorldParty_, 1, 0);
+    ReadProcessMemory(proc->getHandle(), (void*)(exe_->getAddress() + 0x184AF8C), &inCrossWorldParty_, 1, 0);
 }

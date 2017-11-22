@@ -153,24 +153,25 @@ void Menu::alliesMenu(DWORD &mode, INPUT_RECORD &event, HANDLE &hstdin)
 
         if(GetAsyncKeyState(VK_RETURN) & 0x1 && isConsoleWindowFocussed)
         {
+            std::thread t3([=] {
+                if (currentMenuSelection_ == fflogs_->partyMembers_)
+                {
+                    fflogs_->arch_->openAll(fflogs_->partyMembers_);
+                }
 
-            if(currentMenuSelection_ == fflogs_->partyMembers_)
-            {
-                // TODO: code here for ALL
-                fflogs_->arch_->openAll(fflogs_->partyMembers_);
-            }
-
-            else if(fflogs_->arch_->getCrossWorldStatus())
-            {
-                fflogs_->arch_->getFilteredAlliesCW()[currentMenuSelection_]->openBrowser();
-            }
-            else
-            {
-                fflogs_->arch_->getFilteredAllies()[currentMenuSelection_]->openBrowser();
-            }
+                else if (fflogs_->arch_->getCrossWorldStatus())
+                {
+                    fflogs_->arch_->getFilteredAlliesCW()[currentMenuSelection_]->openBrowser();
+                }
+                else
+                {
+                    fflogs_->arch_->getFilteredAllies()[currentMenuSelection_]->openBrowser();
+                }
+            });
+            t3.join();
         }
         mu_.unlock();   // unlock the thread
-        std::this_thread::sleep_for(std::chrono::nanoseconds(2));
+        std::this_thread::sleep_for(std::chrono::nanoseconds(1));
     }
 }
 
@@ -184,7 +185,6 @@ void Menu::start()
     GetConsoleMode(hstdin, &mode);
     SetConsoleMode(hstdin, 0);
 
-    
     // thread to update the menu
     std::thread t1([=, &mode, &event, &hstdin]{ alliesMenu(mode, event, hstdin); });
     // thread to get names
@@ -196,7 +196,7 @@ void Menu::start()
             fflogs_->arch_->updateNames(fflogs_->ffxiv_, fflogs_->partyMembers_);
             mu_.unlock();   // unlock the thread
             // sleep the thread
-            std::this_thread::sleep_for(std::chrono::nanoseconds(2));
+            std::this_thread::sleep_for(std::chrono::nanoseconds(1));
         }
     });
 
