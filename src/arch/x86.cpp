@@ -12,6 +12,8 @@ x86::x86(Process* proc)
     // handle error when getting invalid module
     numberOfPartyMembers_ = new Offset({ 0x114151C, 0x1C, 0x10, 0x10, 0x1C, 0x10 });
     exe_ = new Module("ffxiv.exe");
+
+    // TODO: change this check from console output to IMGUI
     if (!exe_->getModule32bit(proc))
     {
         std::cout << "Could not determine directx versions...\n";

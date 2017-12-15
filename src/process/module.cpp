@@ -27,6 +27,7 @@ bool Module::getModule(Process *proc)
     Module32First(hSnapshot, &nModule);
     do
     {
+        // BUG: This may break
         if (!strcmp(nModule.szModule, moduleName_))
         {
             address_ = (DWORD64)nModule.modBaseAddr;
