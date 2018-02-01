@@ -54,7 +54,7 @@ void x86::createAllies(Process* proc)
     DWORD address = exe_->getAddress();
     address += 0x10297A4;
 
-    ReadProcessMemory(proc->getHandle(), (void*)address, &address, sizeof(DWORD64), 0);
+    ReadProcessMemory(proc->getHandle(), reinterpret_cast<LPCVOID>(address), &address, sizeof(DWORD64), 0);
     address += 0x2E0;
     alliesCW_.push_back(new AllyCW(address));
 
@@ -68,12 +68,12 @@ void x86::createAllies(Process* proc)
 // get the number of party members
 void x86::updateNumberOfPartyMembers(Process *proc, int &partyMembers)
 {
-    ReadProcessMemory(proc->getHandle(), (void*)(numberOfPartyMembers_->getMemoryAddress(proc, exe_)), &partyMembers, sizeof(int), 0);
+    ReadProcessMemory(proc->getHandle(), reinterpret_cast<LPCVOID>(numberOfPartyMembers_->getMemoryAddress(proc, exe_)), &partyMembers, sizeof(int), 0);
 }
 
 // check if currently crossworld party
 void x86::checkCrossWorldParty(Process* proc)
 {
     // do nothing for the time being
-    ReadProcessMemory(proc->getHandle(), (void*)(exe_->getAddress() + 0x117ABF4), &inCrossWorldParty_, 1, 0);
+    ReadProcessMemory(proc->getHandle(), reinterpret_cast<LPCVOID>(exe_->getAddress() + 0x117ABF4), &inCrossWorldParty_, 1, 0);
 }

@@ -54,7 +54,7 @@ void Updater::displayUpdate()
     if(!compareVersion())
     {
         std::cout << "Update has been found...\n";
-        std::cout << "Press enter to update...";
+        std::cout << "Press any key to update...";
 
         while(true)
         {

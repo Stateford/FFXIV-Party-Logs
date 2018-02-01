@@ -20,14 +20,14 @@ bool Player::getCharId()
 
     if (!body.empty())
     {
-        std::wstring tempBody;
+     
 
         if (body.find(L"/character/id/") == std::string::npos)
         {
             return false;
         }
 
-        tempBody = body.substr(body.find(L"/character/id/"), body.size());
+        std::wstring tempBody = body.substr(body.find(L"/character/id/"), body.size());
         std::wstring tempBody2 = tempBody;
         body = tempBody.substr(0, tempBody.find_first_of(L"\""));
         tempBody2 = tempBody2.substr(tempBody2.find(L"</a>"), tempBody2.size());
@@ -56,7 +56,7 @@ void Player::openBrowser()
     {
         std::wstring url = L"https://www.fflogs.com/character/id/" + characterId_;
         //url += characterId_;
-        ShellExecuteW(NULL, L"open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
+        ShellExecuteW(nullptr, L"open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
     }
     else
     {
@@ -74,9 +74,5 @@ void Player::openBrowser()
 
 bool Player::compare(Player* player)
 {
-    if(name_ == player->name_)
-    {
-        return true;
-    }
-    return false;
+    return name_ == player->name_;
 }

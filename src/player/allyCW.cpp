@@ -18,5 +18,5 @@ void AllyCW::display()
 
 void AllyCW::updateName(Process* proc, Module* exe)
 {
-    ReadProcessMemory(proc->getHandle(), (void*)(address_), &name_, 80, 0);
+    ReadProcessMemory(proc->getHandle(), reinterpret_cast<LPCVOID>(address_), &name_, 80, 0);
 }

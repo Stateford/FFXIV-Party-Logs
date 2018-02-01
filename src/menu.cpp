@@ -44,7 +44,7 @@ void Menu::displayAllies()
 
         if(fflogs_->arch_->getFilteredAlliesCW().size() < fflogs_->partyMembers_)
         {
-            partyMembers = fflogs_->arch_->getFilteredAlliesCW().size();
+            partyMembers = static_cast<int>(fflogs_->arch_->getFilteredAlliesCW().size());
         }
 
         for (int i = 0; i < partyMembers; i++)
@@ -68,7 +68,7 @@ void Menu::displayAllies()
 
         if (fflogs_->arch_->getFilteredAllies().size() < fflogs_->partyMembers_)
         {
-            partyMembers = fflogs_->arch_->getFilteredAllies().size();
+            partyMembers = static_cast<int>(fflogs_->arch_->getFilteredAllies().size());
         }
 
         for (int i = 0; i < partyMembers; i++)
