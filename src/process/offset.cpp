@@ -22,7 +22,7 @@ DWORD64 Offset::getMemoryAddress(Process* proc, Module* module)
     for(int i = 0; i < offsets_.size() - 1; i++)
     {
         address += offsets_[i];
-        ReadProcessMemory(proc->getHandle(), (void*)(address), &address, sizeof(DWORD), 0);
+        ReadProcessMemory(proc->getHandle(), reinterpret_cast<LPCVOID>(address), &address, sizeof(DWORD), 0);
     }
     address += offsets_[offsets_.size() - 1];
     return address;
@@ -35,7 +35,7 @@ DWORD64 Offset::getMemoryAddress64(Process* proc, Module* module)
     for (int i = 0; i < offsets_.size() - 1; i++)
     {
         address += offsets_[i];
-        ReadProcessMemory(proc->getHandle(), (void*)(address), &address, sizeof(DWORD64), 0);
+        ReadProcessMemory(proc->getHandle(), reinterpret_cast<LPCVOID>(address), &address, sizeof(DWORD64), 0);
     }
     address += offsets_[offsets_.size() - 1];
 

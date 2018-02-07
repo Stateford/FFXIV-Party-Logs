@@ -19,5 +19,5 @@ void YOU::display()
 
 void YOU::updateName(Process* proc, Module* exe)
 {
-    ReadProcessMemory(proc->getHandle(), (void*)(exe->getAddress() + address_), &name_, 80, 0);
+    ReadProcessMemory(proc->getHandle(), reinterpret_cast<LPCVOID>(exe->getAddress() + address_), &name_, 80, 0);
 }

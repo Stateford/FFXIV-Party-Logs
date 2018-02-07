@@ -9,9 +9,9 @@ class Process
     HWND hWnd_;
     HANDLE pHandle_;
 public:
-    Process(std::string processName);
+    Process(const std::string &processName);
     ~Process();
-    void getProcessId(std::string processName);
+    void getProcessId(const std::string &processName);
     HANDLE getHandle();
     DWORD getPid();
 };

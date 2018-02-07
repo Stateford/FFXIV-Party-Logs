@@ -29,7 +29,7 @@ bool Module::getModule(Process *proc)
     {
         if (!strcmp(nModule.szModule, moduleName_))
         {
-            address_ = (DWORD64)nModule.modBaseAddr;
+            address_ = reinterpret_cast<DWORD64>(nModule.modBaseAddr);
             return true;
         }
     } while (Module32Next(hSnapshot, &nModule));
@@ -48,7 +48,7 @@ bool Module::getModule32bit(Process *proc)
     {
         if (!strcmp(nModule.szModule, moduleName_))
         {
-            address_ = (DWORD64)nModule.modBaseAddr;
+            address_ = reinterpret_cast<DWORD64>(nModule.modBaseAddr);
             return true;
         }
     } while (Module32Next(hSnapshot, &nModule));

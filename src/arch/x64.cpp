@@ -11,7 +11,7 @@ x64::x64(Process* proc)
     // get window name
     exe_ = new Module("ffxiv_dx11.exe");
     // memory offests for dx11 number of party members
-    numberOfPartyMembers_ = new Offset({ 0x0180A038, 0x38, 0x18, 0x20, 0x20, 0x10 });
+    numberOfPartyMembers_ = new Offset({ 0x018AE778, 0x38, 0x18, 0x20, 0x20, 0x10 });
 
     // if dx11 (64-bit) set static x64 true
     if (exe_->getModule(proc))
@@ -35,23 +35,28 @@ x64::~x64()
 // create allies
 void x64::createAllies(Process* proc)
 {
+    // A7128
+    // 18F30F8
     // dx11 64-bit offsets
-    allies_.push_back(new YOU(0x182AB51));
-    allies_.push_back(new Ally(0x184BFD0));
-    allies_.push_back(new Ally(0x184C1F0));
-    allies_.push_back(new Ally(0X184C410));
-    allies_.push_back(new Ally(0x184C630));
-    allies_.push_back(new Ally(0x184C850));
-    allies_.push_back(new Ally(0x184CA70));
-    allies_.push_back(new Ally(0x184CC90));
-    allies_.push_back(new Ally(0X184CEB0));
-    
+    allies_.push_back(new YOU(0x18D1C79));
+    // each address is 0x220 away
+    allies_.push_back(new Ally(0x18F3540));
+    allies_.push_back(new Ally(0x18F3760));
+    allies_.push_back(new Ally(0X18F3980));
+    allies_.push_back(new Ally(0x18F3BA0));
+    allies_.push_back(new Ally(0x18F3DC0));
+    allies_.push_back(new Ally(0x18F3FE0));
+    allies_.push_back(new Ally(0x18F4200));
+    allies_.push_back(new Ally(0X18F3320));
+    // 18F3320
     // create crossworld allies
-    alliesCW_.push_back(allies_[0]); // YOU
-    DWORD64 address = exe_->getAddress();
-    address += 0x017E86A0;
+    alliesCW_.push_back(allies_[0]);        // YOU
 
-    ReadProcessMemory(proc->getHandle(), (void*)address, &address, sizeof(DWORD64), 0);
+    DWORD64 address = exe_->getAddress();   // exe base address
+    // 0x0188C540 #NEW ADDRESS
+    address += 0x0188C540;                  // address offset
+
+    ReadProcessMemory(proc->getHandle(), reinterpret_cast<LPCVOID>(address), &address, sizeof(DWORD64), 0);
     address += 0x2E8;
     alliesCW_.push_back(new AllyCW(address));
 
@@ -65,11 +70,11 @@ void x64::createAllies(Process* proc)
 // get the number of party members
 void x64::updateNumberOfPartyMembers(Process* proc, int &partyMembers)
 {
-    ReadProcessMemory(proc->getHandle(), (void*)(numberOfPartyMembers_->getMemoryAddress64(proc, exe_)), &partyMembers, sizeof(int), 0);
+    ReadProcessMemory(proc->getHandle(), reinterpret_cast<LPCVOID>(numberOfPartyMembers_->getMemoryAddress64(proc, exe_)), &partyMembers, sizeof(int), 0);
 }
 
 // check if currently crossworld party
 void x64::checkCrossWorldParty(Process* proc)
 {
-    ReadProcessMemory(proc->getHandle(), (void*)(exe_->getAddress() + 0x184AF8C), &inCrossWorldParty_, 1, 0);
+    ReadProcessMemory(proc->getHandle(), reinterpret_cast<LPCVOID>(exe_->getAddress() + 0x18F22C4), &inCrossWorldParty_, 1, 0);
 }
