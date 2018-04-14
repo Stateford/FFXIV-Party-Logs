@@ -2,7 +2,6 @@
 #include "../bin/request.h"
 #include <codecvt>
 
-std::wstring Player::clientId = L"ae759d44880e5523d5fb3b59df028c64";
 
 bool Player::getCharId()
 {
